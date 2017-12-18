@@ -36,10 +36,10 @@ plot.truth <- function(formu = NA, pop_size = NA, base_ = NA, pred_choice = NA, 
 
   #create matrices containing sequences of the median and the range of possible values
   cond.matrix <- matrix(ncol = n_preds_original, nrow = n_values)
-  colnames(cond.matrix) <- colnames(predictors_)[pred_choice]
+  colnames(cond.matrix) <- colnames(predictors_)[seq.int(n_preds_original)]
   med.matrix <- cond.matrix
-  for(pred in pred_choice) cond.matrix[,pred] <- seq(min(predictors_[,pred]), max(predictors_[,pred]), len = n_values)
-  for(pred in pred_choice) med.matrix[,pred] <- rep(median(predictors_[,pred]), len = n_values)
+  for(pred in seq.int(n_preds_original)) cond.matrix[,pred] <- seq(min(predictors_[,pred]), max(predictors_[,pred]), len = n_values)
+  for(pred in seq.int(n_preds_original)) med.matrix[,pred] <- rep(median(predictors_[,pred]), len = n_values)
 
   #array for conditional and marginal rsf-scores
   cond.scores <- array(dim = c(n_values, pop_size))
