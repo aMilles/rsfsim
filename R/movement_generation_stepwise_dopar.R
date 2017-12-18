@@ -96,6 +96,6 @@ move.from.preds.stepwise <- function(formu, pop_size = pop.size, steps_ = steps,
   track$presence <- factor(track$presence, levels = c(0, 1))
   individual_map <- map[present_cells, ]
   individual_map <- cbind(individual_map, ind = track$ind[track$presence == 1], step_nr = rep(1:steps_, pop_size))
-  beepr::beep(1)
+
   return(list(individual_map, track, probs))
 }
