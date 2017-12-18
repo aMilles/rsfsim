@@ -34,7 +34,6 @@ plot.truth <- function(formu = NA, pop_size = NA, base_ = NA, pred_choice = NA, 
     stop("marginal bootstrap currently not available")
   }
 
-  for(param in names(param_list)) print(c(param, get(param)))
   #create matrices containing sequences of the median and the range of possible values
   cond.matrix <- matrix(ncol = n_preds_original, nrow = n_values)
   colnames(cond.matrix) <- colnames(predictors_)[pred_choice]
