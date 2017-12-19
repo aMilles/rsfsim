@@ -35,15 +35,9 @@ plot.truth <- function(formu = NA, pop_size = NA, base_ = NA, pred_choice = NA, 
 
   #create matrices containing sequences of the median and the range of possible values
   cond.matrix <- matrix(ncol = n_preds_original, nrow = n_values)
-<<<<<<< HEAD
-<<<<<<< HEAD
   colnames(cond.matrix) <- colnames(predictors_)[seq.int(n.preds.original)]
-=======
   colnames(cond.matrix) <- colnames(predictors_)[seq.int(n_preds_original)]
->>>>>>> 4f1e7d673abd88f879c210519a7426afd1e5283c
-=======
   colnames(cond.matrix) <- colnames(predictors_)[seq.int(n_preds_original)]
->>>>>>> 4f1e7d673abd88f879c210519a7426afd1e5283c
   med.matrix <- cond.matrix
   for(pred in seq.int(n_preds_original)) cond.matrix[,pred] <- seq(min(predictors_[,pred]), max(predictors_[,pred]), len = n_values)
   for(pred in seq.int(n_preds_original)) med.matrix[,pred] <- rep(median(predictors_[,pred]), len = n_values)
@@ -69,7 +63,7 @@ plot.truth <- function(formu = NA, pop_size = NA, base_ = NA, pred_choice = NA, 
           temp.marg.matrix <- model.matrix(formu, data.frame(temp.marg.matrix))[, -1]
           marg.scores[, marg.value, ind] <- apply(temp.marg.matrix, 1, function(x) exp(sum(ind_pref*x)))
         }
-        
+
         temp.cond.matrix <- med.matrix
         temp.cond.matrix[, pred] <- cond.matrix[, pred]
         temp.cond.matrix <- model.matrix(formu, data.frame(temp.cond.matrix))[, -1]

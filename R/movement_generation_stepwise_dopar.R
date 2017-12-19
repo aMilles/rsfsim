@@ -35,7 +35,7 @@ move.from.preds.stepwise <- function(formu, pop_size = pop.size, steps_ = steps,
   #create a distance matrix to sample from later on if a stepwise approach is used
   if(stepwise == T)  dist_matrix_ext <- matrix(apply(
      X = gtools::permutations(gridsize * 3, 2,1:(gridsize * 3), repeats.allowed = T),                            MARGIN = 1,
-     FUN = function(x) sqrt((x[1]-gridsize*3/2)^2 + (x[2]-(gridsize*3/2))^2)), 
+     FUN = function(x) sqrt((x[1]-gridsize*3/2)^2 + (x[2]-(gridsize*3/2))^2)),
     ncol = gridsize * 3)
 
 
@@ -72,7 +72,7 @@ move.from.preds.stepwise <- function(formu, pop_size = pop.size, steps_ = steps,
     # sample absence - use all cells or sample a certain amount of cells where no individual was sampled
     if(absence_sampling == "not_full") absence_cells <- sample((1:(gridsize^2))[-unique(present_cells)], size = non_steps, replace = T)
     if(absence_sampling == "full") absence_cells <- 1:(gridsize^2)
-      
+
     return(list(present_cells, absence_cells, plogis(predictors_%*%ind_pref)))
   }
 
@@ -87,32 +87,17 @@ move.from.preds.stepwise <- function(formu, pop_size = pop.size, steps_ = steps,
     track <- data.frame(ind = as.factor(c(rep(1:pop_size, each = steps_), rep(1:pop_size, each = non_steps))),
                       presence = c(rep(1, length(present_cells)),rep(0, pop_size * non_steps)),
                       step_nr = c(rep(1:steps_, len = length(present_cells)), rep(NA, len = length(absence_cells))))
-  
+
   track_preds_present <- matrix(predictors_[present_cells,], ncol = n_preds)
   track_preds_absent <- matrix(predictors_[absence_cells,], ncol = n_preds)
   track_preds <- rbind(track_preds_present, track_preds_absent)
   if(n_preds == 1) track_preds <- c(track_preds_present, track_preds_absent)
-<<<<<<< HEAD
-<<<<<<< HEAD
-  
-=======
-=======
->>>>>>> 4f1e7d673abd88f879c210519a7426afd1e5283c
-
->>>>>>> 4f1e7d673abd88f879c210519a7426afd1e5283c
   track <- data.frame(track, track_preds)
   names(track)[4:ncol(track)] <- colnames(predictors_)
   #track[, colnames(predictors_)] <- apply(track[,colnames(predictors_)], 2, scale)
   track$presence <- factor(track$presence, levels = c(0, 1))
   individual_map <- map[present_cells, ]
   individual_map <- cbind(individual_map, ind = track$ind[track$presence == 1], step_nr = rep(1:steps_, pop_size))
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 
->>>>>>> 4f1e7d673abd88f879c210519a7426afd1e5283c
-=======
-
->>>>>>> 4f1e7d673abd88f879c210519a7426afd1e5283c
   return(list(individual_map, track, probs))
 }
