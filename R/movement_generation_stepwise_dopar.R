@@ -84,11 +84,14 @@ move.from.preds.stepwise <- function(formu, pop_size = pop.size, steps_ = steps,
   probs <- lapply(out, function(x) x[3][[1]])
 
   #process further output, track contains predictors, 0/1 values, individual id and step numbers, indvidual map is used for ggplots later on
-  track <- data.frame(ind = as.factor(c(rep(1:pop_size, each = steps_), rep(1:pop_size, each = non_steps))),
+    track <- data.frame(ind = as.factor(c(rep(1:pop_size, each = steps_), rep(1:pop_size, each = non_steps))),
                       presence = c(rep(1, length(present_cells)),rep(0, pop_size * non_steps)),
                       step_nr = c(rep(1:steps_, len = length(present_cells)), rep(NA, len = length(absence_cells))))
-  for(i in colnames(predictors_)) assign(i, c(predictors_[present_cells, match(i, colnames(predictors_))], predictors_[absence_cells, match(i, colnames(predictors_))]))
-  track_preds<- do.call(cbind, mget(ls()[grep("x", ls())]))
+  
+  track_preds_present <- matrix(predictors_[present_cells,], ncol = n_preds)
+  track_preds_absent <- matrix(predictors_[absence_cells,], ncol = n_preds)
+  track_preds <- rbind(track_preds_present, track_preds_absent)
+  if(n_preds == 1) track_preds <- c(track_preds_present, track_preds_absent)
 
   track <- data.frame(track, track_preds)
   names(track)[4:ncol(track)] <- colnames(predictors_)
