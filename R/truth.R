@@ -29,17 +29,20 @@ plot.truth <- function(formu = NA, pop_size = NA, base_ = NA, pred_choice = NA, 
 
     if(!is.na(param_list)[[1]]) for(param in names(param_list[names(param_list) %in% names(as.list(environment(), all = TRUE))])) if(is.na(get(param))) assign(param, param_list[[param]])
 
-
   if(mode == "bootstrap" & uc_type == "both" | uc_type == "marg"){
     stop("marginal bootstrap currently not available")
   }
 
   #create matrices containing sequences of the median and the range of possible values
   cond.matrix <- matrix(ncol = n_preds_original, nrow = n_values)
-  colnames(cond.matrix) <- colnames(predictors_)[pred_choice]
+<<<<<<< HEAD
+  colnames(cond.matrix) <- colnames(predictors_)[seq.int(n.preds.original)]
+=======
+  colnames(cond.matrix) <- colnames(predictors_)[seq.int(n_preds_original)]
+>>>>>>> 4f1e7d673abd88f879c210519a7426afd1e5283c
   med.matrix <- cond.matrix
-  for(pred in pred_choice) cond.matrix[,pred] <- seq(min(predictors_[,pred]), max(predictors_[,pred]), len = n_values)
-  for(pred in pred_choice) med.matrix[,pred] <- rep(median(predictors_[,pred]), len = n_values)
+  for(pred in seq.int(n_preds_original)) cond.matrix[,pred] <- seq(min(predictors_[,pred]), max(predictors_[,pred]), len = n_values)
+  for(pred in seq.int(n_preds_original)) med.matrix[,pred] <- rep(median(predictors_[,pred]), len = n_values)
 
   #array for conditional and marginal rsf-scores
   cond.scores <- array(dim = c(n_values, pop_size))

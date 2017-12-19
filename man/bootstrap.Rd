@@ -5,7 +5,8 @@
 \title{Bootstrap}
 \usage{
 bootstrap(formu = f.species, df = track, model = "glm",
-  n_bootstrap = 100, pop_size = pop.size, stratified = F)
+  n_bootstrap = 100, pop_size = pop.size, stratified = F,
+  bayesianInput_ = NA)
 }
 \arguments{
 \item{formu}{formula to be used in the model}
@@ -17,6 +18,8 @@ bootstrap(formu = f.species, df = track, model = "glm",
 \item{n_bootstrap}{number of bootstraps}
 
 \item{stratified}{logical wether a stratified or a pooled bootstrap should be performed}
+
+\item{bayesianInput_}{a list containing a Bayesian Setup, settings, and a character specifying the sampler created with Bayesian Tools}
 
 \item{pop.size}{number of individuals}
 }

@@ -84,7 +84,7 @@ move.from.preds.stepwise <- function(formu, pop_size = pop.size, steps_ = steps,
   probs <- lapply(out, function(x) x[3][[1]])
 
   #process further output, track contains predictors, 0/1 values, individual id and step numbers, indvidual map is used for ggplots later on
-  track <- data.frame(ind = as.factor(c(rep(1:pop_size, each = steps_), rep(1:pop_size, each = non_steps))),
+    track <- data.frame(ind = as.factor(c(rep(1:pop_size, each = steps_), rep(1:pop_size, each = non_steps))),
                       presence = c(rep(1, length(present_cells)),rep(0, pop_size * non_steps)),
                       step_nr = c(rep(1:steps_, len = length(present_cells)), rep(NA, len = length(absence_cells))))
   
@@ -92,13 +92,20 @@ move.from.preds.stepwise <- function(formu, pop_size = pop.size, steps_ = steps,
   track_preds_absent <- matrix(predictors_[absence_cells,], ncol = n_preds)
   track_preds <- rbind(track_preds_present, track_preds_absent)
   if(n_preds == 1) track_preds <- c(track_preds_present, track_preds_absent)
+<<<<<<< HEAD
   
+=======
+
+>>>>>>> 4f1e7d673abd88f879c210519a7426afd1e5283c
   track <- data.frame(track, track_preds)
   names(track)[4:ncol(track)] <- colnames(predictors_)
   #track[, colnames(predictors_)] <- apply(track[,colnames(predictors_)], 2, scale)
   track$presence <- factor(track$presence, levels = c(0, 1))
   individual_map <- map[present_cells, ]
   individual_map <- cbind(individual_map, ind = track$ind[track$presence == 1], step_nr = rep(1:steps_, pop_size))
-  beepr::beep(1)
+<<<<<<< HEAD
+=======
+
+>>>>>>> 4f1e7d673abd88f879c210519a7426afd1e5283c
   return(list(individual_map, track, probs))
 }
