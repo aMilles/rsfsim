@@ -36,7 +36,11 @@ plot.truth <- function(formu = NA, pop_size = NA, base_ = NA, pred_choice = NA, 
   #create matrices containing sequences of the median and the range of possible values
   cond.matrix <- matrix(ncol = n_preds_original, nrow = n_values)
 <<<<<<< HEAD
+<<<<<<< HEAD
   colnames(cond.matrix) <- colnames(predictors_)[seq.int(n.preds.original)]
+=======
+  colnames(cond.matrix) <- colnames(predictors_)[seq.int(n_preds_original)]
+>>>>>>> 4f1e7d673abd88f879c210519a7426afd1e5283c
 =======
   colnames(cond.matrix) <- colnames(predictors_)[seq.int(n_preds_original)]
 >>>>>>> 4f1e7d673abd88f879c210519a7426afd1e5283c

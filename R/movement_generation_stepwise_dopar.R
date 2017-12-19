@@ -93,8 +93,11 @@ move.from.preds.stepwise <- function(formu, pop_size = pop.size, steps_ = steps,
   track_preds <- rbind(track_preds_present, track_preds_absent)
   if(n_preds == 1) track_preds <- c(track_preds_present, track_preds_absent)
 <<<<<<< HEAD
+<<<<<<< HEAD
   
 =======
+=======
+>>>>>>> 4f1e7d673abd88f879c210519a7426afd1e5283c
 
 >>>>>>> 4f1e7d673abd88f879c210519a7426afd1e5283c
   track <- data.frame(track, track_preds)
@@ -104,6 +107,10 @@ move.from.preds.stepwise <- function(formu, pop_size = pop.size, steps_ = steps,
   individual_map <- map[present_cells, ]
   individual_map <- cbind(individual_map, ind = track$ind[track$presence == 1], step_nr = rep(1:steps_, pop_size))
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+
+>>>>>>> 4f1e7d673abd88f879c210519a7426afd1e5283c
 =======
 
 >>>>>>> 4f1e7d673abd88f879c210519a7426afd1e5283c
