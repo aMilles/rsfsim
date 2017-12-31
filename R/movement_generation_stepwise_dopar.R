@@ -68,7 +68,7 @@ move.from.preds.stepwise <- function(formu, pop_size = pop.size, steps_ = steps,
     if(absence_sampling == "absence") absence_cells <- sample((1:(gridsize^2))[-unique(present_cells)], size = non_steps, replace = T)
     if(absence_sampling == "availability") absence_cells <- 1:(gridsize^2)
       
-    return(list(present_cells, absence_cells, plogis(predictors_%*%ind_pref)))
+    return(list(present_cells, absence_cells, plogis(predictors_%*%ind_pref), ind_pref))
   }
 
   parallel::stopCluster(cl)
@@ -77,6 +77,7 @@ move.from.preds.stepwise <- function(formu, pop_size = pop.size, steps_ = steps,
   present_cells <- unlist(lapply(out, function(x) x[1][[1]]))
   absence_cells <- unlist(lapply(out, function(x) x[2][[1]]))
   probs <- lapply(out, function(x) x[3][[1]])
+  ind_prefs <- lapply(out, function(x) x[4][[1]])
 
   #process further output, track contains predictors, 0/1 values, individual id and step numbers, indvidual map is used for ggplots later on
   track <- data.frame(ind = as.factor(c(rep(1:pop_size, each = steps_), rep(1:pop_size, each = non_steps))),
@@ -93,5 +94,5 @@ move.from.preds.stepwise <- function(formu, pop_size = pop.size, steps_ = steps,
   track$presence <- factor(track$presence, levels = c(0, 1))
   individual_map <- map[present_cells, ]
   individual_map <- cbind(individual_map, ind = track$ind[track$presence == 1], step_nr = rep(1:steps_, pop_size))
-  return(list(individual_map, track, probs))
+  return(list(individual_map, track, probs, ind_prefs))
 }
