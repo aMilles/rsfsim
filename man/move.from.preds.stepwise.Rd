@@ -5,9 +5,9 @@
 \title{A resource selection simulator}
 \usage{
 move.from.preds.stepwise(formu, pop_size = pop.size, steps_ = steps,
-  non_steps = non.steps, base_, ind_pref_mat = NA, n_preds,
-  n_preds_original, gridsize = sqrt(nrow(predictors)), predictors_,
-  ind_sd = NA, dist_effect = NA, stepwise = F, absence_sampling = NA,
+  non_steps = non.steps, base_, n_preds, n_preds_original,
+  gridsize = sqrt(nrow(predictors)), predictors_, ind_sd = NA,
+  dist_effect = NA, stepwise = F, absence_sampling = NA,
   param_list = list(NA))
 }
 \arguments{
@@ -35,7 +35,7 @@ move.from.preds.stepwise(formu, pop_size = pop.size, steps_ = steps,
 
 \item{stepwise}{logical, if relocations are only dependent of the set of predictors  or also dependent of the location of the last step}
 
-\item{absence_sampling}{default is "full" , meaning all cells are used as availability background}
+\item{absence_sampling}{default is "availability" , meaning all cells are used as availability background. "absence" samples only cells where no presence has been recorded.}
 
 \item{pred_choice}{vector  of integers defining the set of predictors originally selected}
 }
