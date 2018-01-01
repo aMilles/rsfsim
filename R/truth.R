@@ -24,7 +24,7 @@
 #' plot.truth()
 #'
 #' @export
-plot.truth <- function(formu = NA, pop_size = NA, base_ = NA, pred_choice = NA, n_preds = NA, n_preds_original = NA, gridsize = NA, predictors_ = NA, ind_sd = NA, n_values = NA, uc_type = NA, mode = NA, param_list = list(NA), silent = T){
+plot.truth <- function(formu = NA, pop_size = NA, base_ = NA, pred_choice = NA, n_preds = NA, n_preds_original = NA, gridsize = NA, predictors_ = NA, ind_sd = NA, n_values = NA, uc_type = NA, mode = NA, param_list = list(NA), silent = T, ind_prefs = NA){
 
 
     if(!is.na(param_list)[[1]]) for(param in names(param_list[names(param_list) %in% names(as.list(environment(), all = TRUE))])) if(is.na(get(param))) assign(param, param_list[[param]])
@@ -54,8 +54,13 @@ plot.truth <- function(formu = NA, pop_size = NA, base_ = NA, pred_choice = NA, 
     out <- foreach(i = 1:n_preds_original, inputs = vector("list", n_preds_original)) %dopar% {
       pred <- i
       for(ind in 1:pop_size){
-        set.seed(ind)
-        ind_pref <- base_*rnorm(mean = 1, sd = ind_sd, n = n_preds)
+
+        if(is.na(ind_prefs)){
+          ind_pref <- base_*rnorm(mean = 1, sd = ind_sd, n = n_preds)
+        }else{
+          ind_pref <- ind_prefs[ind, ]
+        }
+
 
         for(marg.value in 1:n_values){
           temp.marg.matrix <- predictors_[,1:n_preds_original]
@@ -77,7 +82,13 @@ plot.truth <- function(formu = NA, pop_size = NA, base_ = NA, pred_choice = NA, 
     out <- foreach(i = 1:n_preds_original, inputs = vector("list", n_preds_original)) %dopar% {
       pred <- i
       for(ind in 1:pop_size){
-        ind_pref <- base_*rnorm(mean = 1, sd = ind_sd, n = n_preds)
+
+        if(is.na(ind_prefs)){
+          ind_pref <- base_*rnorm(mean = 1, sd = ind_sd, n = n_preds)
+        }else{
+          ind_pref <- ind_prefs[ind, ]
+        }
+
         temp.cond.matrix <- med.matrix
         temp.cond.matrix[, pred] <- cond.matrix[, pred]
         temp.cond.matrix <- model.matrix(formu, data.frame(temp.cond.matrix))[, -1]

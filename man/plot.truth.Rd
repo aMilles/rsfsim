@@ -4,10 +4,10 @@
 \alias{plot.truth}
 \title{A rsf score function}
 \usage{
-\method{plot}{truth}(formu = NA, pop_size = NA, base_ = NA,
-  pred_choice = NA, n_preds = NA, n_preds_original = NA, gridsize = NA,
-  predictors_ = NA, ind_sd = NA, n_values = NA, uc_type = NA,
-  mode = NA, param_list = list(NA), silent = T)
+plot.truth(formu = NA, pop_size = NA, base_ = NA, pred_choice = NA,
+  n_preds = NA, n_preds_original = NA, gridsize = NA, predictors_ = NA,
+  ind_sd = NA, n_values = NA, uc_type = NA, mode = NA,
+  param_list = list(NA), silent = T, ind_prefs = NA)
 }
 \arguments{
 \item{formu}{formula without an response such as ~ x1 + x2}
