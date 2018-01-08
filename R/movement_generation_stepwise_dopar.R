@@ -35,7 +35,7 @@ move.from.preds.stepwise <- function(formu, pop_size = pop.size, steps_ = steps,
   #create a distance matrix to sample from later on if a stepwise approach is used
   if(stepwise == T)  dist_matrix_ext <- matrix(apply(
      X = gtools::permutations(gridsize * 3, 2,1:(gridsize * 3), repeats.allowed = T),                            MARGIN = 1,
-     FUN = function(x) sqrt((x[1]-gridsize*3/2)^2 + (x[2]-(gridsize*3/2))^2)), 
+     FUN = function(x) sqrt((x[1]-gridsize*3/2)^2 + (x[2]-(gridsize*3/2))^2)),
     ncol = gridsize * 3)
 
 
@@ -43,6 +43,7 @@ move.from.preds.stepwise <- function(formu, pop_size = pop.size, steps_ = steps,
   cl <- parallel::makeCluster(parallel::detectCores()-1)
   doSNOW::registerDoSNOW(cl)
   out<-foreach::foreach(input = vector("list", pop_size), i = 1:pop_size)%dopar%{
+    set.seed(i)
       ind_pref <- base_*rnorm(mean = 1, sd = ind_sd , n = n_preds)
 
     #sample presence - sample stepwise
@@ -67,7 +68,7 @@ move.from.preds.stepwise <- function(formu, pop_size = pop.size, steps_ = steps,
     # sample absence - use all cells or sample a certain amount of cells where no individual was sampled
     if(absence_sampling == "absence") absence_cells <- sample((1:(gridsize^2))[-unique(present_cells)], size = non_steps, replace = T)
     if(absence_sampling == "availability") absence_cells <- 1:(gridsize^2)
-      
+
     return(list(present_cells, absence_cells, plogis(predictors_%*%ind_pref), ind_pref))
   }
 
@@ -83,11 +84,11 @@ move.from.preds.stepwise <- function(formu, pop_size = pop.size, steps_ = steps,
   track <- data.frame(ind = as.factor(c(rep(1:pop_size, each = steps_), rep(1:pop_size, each = non_steps))),
                       presence = c(rep(1, length(present_cells)),rep(0, pop_size * non_steps)),
                       step_nr = c(rep(1:steps_, len = length(present_cells)), rep(NA, len = length(absence_cells))))
-  
-  
+
+
   track_preds <- rbind(predictors_[present_cells,], predictors_[absence_cells,])
   if(n_preds == 1) track_preds <- c(predictors_[present_cells,], predictors_[absence_cells,])
-  
+
   track <- data.frame(cbind(track, track_preds))
   names(track)[4:ncol(track)] <- colnames(predictors_)
   #track[, colnames(predictors_)] <- apply(track[,colnames(predictors_)], 2, scale)
