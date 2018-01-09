@@ -4,12 +4,11 @@
 \alias{bootstrap}
 \title{Bootstrap}
 \usage{
-bootstrap(formu = f.species, df = track, analysis = "glm",
-  n_bootstrap = 100, pop_size = pop.size, stratified = F,
-  bayesianInput_ = NA)
+bootstrap(f_species = NA, df = NA, analysis = "glm", n_bootstrap = NA,
+  pop_size = NA, stratified = F)
 }
 \arguments{
-\item{formu}{formula to be used in the analysis}
+\item{f_species}{formula to be used in the analysis}
 
 \item{df}{data frame to be used in the analysis}
 
@@ -20,14 +19,12 @@ bootstrap(formu = f.species, df = track, analysis = "glm",
 \item{pop_size}{number of individuals}
 
 \item{stratified}{logical wether a stratified or a pooled bootstrap should be performed}
-
-\item{bayesianInput_}{a list containing a Bayesian Setup, settings, and a character specifying the sampler created with Bayesian Tools}
 }
 \value{
 returns betas of the bootstrapped analysis
 }
 \description{
-This function generates bootstrapped betas.
+This function generates bootstrapped models with glm/glmm .
 }
 \examples{
 bootstrap()
