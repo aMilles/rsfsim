@@ -26,8 +26,12 @@ bootstrap <- function(f_species = NA, df = NA, analysis = "glm", n_bootstrap = N
     #Bootstrap sampling
     if(stratified == T){
       ind.samples <- vector("list", pop_size)
+
       for(ind in 1:pop_size){
-        ind.samples[[ind]] <- sample(which(df$ind == ind), size = sum(df$ind == ind), replace = T)
+        selection_ind_df <- seq.int(NROW(df))[which(df$ind == ind & df$presence == 1)]
+        nonselection_ind_df <- seq.int(NROW(df))[which(df$ind == ind & df$presence == 0)]
+        ind.samples[[ind]] <- c(sample(nonselection_ind_df, length(nonselection_ind_df), replace = T),
+                                sample(selection_ind_df, length(selection_ind_df), replace = T))
       }
       boot.sample <- unlist(ind.samples)
     }else{
@@ -43,7 +47,6 @@ bootstrap <- function(f_species = NA, df = NA, analysis = "glm", n_bootstrap = N
       n_preds <- length(nlme::fixed.effects(m_glmm)) - 1
       GLMM_coef <- matrix(nrow = pop_size, ncol = n_preds)
       for(i in 1:pop_size) GLMM_coef[i,] <-as.vector(as.matrix(nlme::fixed.effects(m_glmm)[-1] + nlme::random.effects(m_glmm)$ind[i,]))
-
       return(GLMM_coef)
     }
 
