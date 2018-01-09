@@ -21,7 +21,7 @@ bootstrap <- function(f_species = NA, df = NA, analysis = "glm", n_bootstrap = N
   cl <- parallel::makeCluster(parallel::detectCores()-1)
   doSNOW::registerDoSNOW(cl)
 
-  betas <- foreach::foreach(i = 1:n_bootstrap, .combine = rbind, .packages = c("lme4", "nlme"))%dopar%{
+  betas <- foreach(i = 1:n_bootstrap, .combine = rbind, .packages = c("lme4", "nlme"))%dopar%{
     bootstrap = i
     #Bootstrap sampling
     if(stratified == T){

@@ -24,7 +24,7 @@
 #' plot.truth()
 #'
 #' @export
-plot.truth <- function(formu = NA, pop_size = NA, base_ = NA, pred_choice = NA, n_preds = NA, n_preds_original = NA, gridsize = NA, predictors_ = NA, ind_sd = NA, n_values = NA, uc_type = NA, mode = NA, param_list = list(NA), silent = T, ind_prefs = NA){
+rsf.score <- function(formu = NA, pop_size = NA, base_ = NA, pred_choice = NA, n_preds = NA, n_preds_original = NA, gridsize = NA, predictors_ = NA, ind_sd = NA, n_values = NA, uc_type = NA, mode = NA, param_list = list(NA), silent = T, ind_prefs = NA){
 
 
     if(!is.na(param_list)[[1]]) for(param in names(param_list[names(param_list) %in% names(as.list(environment(), all = TRUE))])) if(is.na(get(param))) assign(param, param_list[[param]])
@@ -51,7 +51,7 @@ plot.truth <- function(formu = NA, pop_size = NA, base_ = NA, pred_choice = NA, 
   doSNOW::registerDoSNOW(cl)
 
   if(uc_type == "both" | uc_type == "marg"){
-    out <- foreach(i = 1:n_preds_original, inputs = vector("list", n_preds_original)) %dopar% {
+    out <- foreach(i = 1:n_preds_original, inputs = vector("list", n_preds_original))%dopar%{
       pred <- i
       for(ind in 1:pop_size){
 
