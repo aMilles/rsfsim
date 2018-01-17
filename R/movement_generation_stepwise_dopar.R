@@ -45,7 +45,7 @@ move.from.preds.stepwise <- function(formu, pop_size = pop.size, steps_ = steps,
   out<-foreach::foreach(input = vector("list", pop_size), i = 1:pop_size)%dopar%{
     set.seed(i)
       ind_pref <- base_*rnorm(mean = 1, sd = ind_sd , n = n_preds)
-
+    set.seed(Sys.time())
     #sample presence - sample stepwise
     if(stepwise == F){
       present_cells <- sample(1:(gridsize^2), size = steps_, prob =  plogis(predictors_%*%ind_pref), replace = T)
